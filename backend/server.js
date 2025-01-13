@@ -12,14 +12,41 @@ import express from 'express';      // need to add "type": "module" in package.j
 import dotenv from 'dotenv';        // dotenv allows access to .env file content which normally show 'undefined' in terminal 
 import { connect } from 'mongoose';
 import { connectDB } from './config/db.js'; 
+import Product from '../models/product.model.js';
 
 dotenv.config(); // load environment variables from .env file
 
 const app = express(); // create an express application
 
-app.get('/products', (req, res) => {       // "/" only is root route, e.g. /home is http://localhost:3000/home
-    // res.send("Server is opening products page");
-})
+/*
+    Test if the website can be opened on localhost
+*/
+// app.get('/home', (req, res) => {       // "/" only is root route, e.g. /home is http://localhost:3000/home
+//     res.send("Server is opening products page");
+// })
+
+/*
+    Middleware to parse JSON data in the body of the request
+*/
+app.use(express.json()); 
+
+app.post("/api/products", async (req, res) => {
+    const product = req.body;   // user'll send this data 
+
+    if (!product.name || !product.price || !product.image) {
+        return res.status(400).json({ success: false, message: "Please provide all fields." });
+    }
+
+    const newProduct = new Product(product);
+
+    try {
+        await newProduct.save();
+        res.status(201).json({ success: true, data: newProduct });
+    } catch (error) {
+        console.error("Error in creating product: ", error.message);
+        res.status(500).json({ success: false, message: "Server error."})
+    }
+});
 
 
 /*
