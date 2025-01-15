@@ -18,9 +18,14 @@ MERN stack side project
 npm init -y
 ```
 
-2. Download backend packages
+2. Install backend packages
 ```shell
 npm install express mongoose dotenv
+```
+
+3. Install *nodemon*  development utility (automatically restarts your node application when it detects any changes.) 
+```shell
+npm i nodemon -D
 ```
 
 ### Setup .env file
