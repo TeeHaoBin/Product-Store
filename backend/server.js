@@ -52,9 +52,10 @@ app.delete("/api/products/:id", async (req, res) => {
     const { id } = req.params;
 
     /*
-        Delete after validation @ postman
+        Testing for DELETE API in terminal using postman
     */
     // console.log("id: ", id);
+
     try {
         await Product.findByIdAndDelete(id);
         res.status(200).json({ success: true, message: "Product is deleted." });
