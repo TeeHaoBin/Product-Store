@@ -30,6 +30,16 @@ const app = express(); // create an express application
 */
 app.use(express.json()); 
 
+app.get("/api/products", async (req, res) => {
+   try {
+    const products = await Product.find({});
+    res.status(200).json({ success: true, data: products });
+   } catch (error) {
+    console.log("Error in fetching products: ", error.message);
+    res.status(500).json({ success: false, message: "Server Error."});
+   }
+})
+
 app.post("/api/products", async (req, res) => {
     const product = req.body;   // user'll send this data 
 
