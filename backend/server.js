@@ -10,7 +10,7 @@ Traditional way to import express
 // const express = require( 'express');
 import express from 'express';      // need to add "type": "module" in package.json
 import dotenv from 'dotenv';        // dotenv allows access to .env file content which normally show 'undefined' in terminal 
-import { connect } from 'mongoose';
+import mongoose, { connect } from 'mongoose';
 import { connectDB } from './config/db.js'; 
 import Product from '../models/product.model.js';
 
@@ -57,6 +57,23 @@ app.post("/api/products", async (req, res) => {
         res.status(500).json({ success: false, message: "Server error."})
     }
 });
+
+app.put("/api/products/:id", async (req, res) => {
+    const { id } = req.params;
+    
+    const product = req.body;
+
+    if (mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ success: false, message: "Invalid Product ID"});
+    }
+
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(id, product, { new: true });
+        res.status(500).json({ success: false, message: "Server Error."});
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server Error."});
+    }
+})
 
 app.delete("/api/products/:id", async (req, res) => {
     const { id } = req.params;
