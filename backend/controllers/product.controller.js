@@ -37,7 +37,7 @@ export const updateProduct = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ success: false, message: "Invalid Product ID"});
     }
-
+    
     try {
         const updatedProduct = await Product.findByIdAndUpdate(id, product, { new: true });
         res.status(200).json({ success: true, data: updatedProduct });
@@ -48,17 +48,21 @@ export const updateProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
     const { id } = req.params;
-
+    
     /*
-        Testing for DELETE API in terminal using postman
+    Testing for DELETE API in terminal using postman
     */
-    // console.log("id: ", id);
-
-    try {
-        await Product.findByIdAndDelete(id);
-        res.status(200).json({ success: true, message: "Product is deleted." });
+   // console.log("id: ", id);
+   
+   if (!mongoose.Types.ObjectId.isValid(id)) {
+       return res.status(404).json({ success: false, message: "Invalid Product ID"});
+   }
+   
+   try {
+       await Product.findByIdAndDelete(id);
+       res.status(200).json({ success: true, message: "Product is deleted." });
     } catch (error) {
         console.log("Error in deleting product:", error.message);
-        res.status(404).json({ success: false, message: "Product not found." });
+        res.status(500).json({ success: false, message: "Server Error." });
     }
 };
