@@ -16,6 +16,7 @@ import productRoutes from "./routes/product.route.js";
 dotenv.config(); // load environment variables from .env file
 
 const app = express(); // create an express application
+const PORT = process.env.PORT || 3000; // set the port number
 
 /*
     Test if the website can be opened on localhost
@@ -36,7 +37,7 @@ app.use("/api/products", productRoutes);
 */
 // console.log(process.env.MONGO_URI);
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     connectDB();           // connect to MongoDB
-    console.log('Server started at http://localhost:3000');
+    console.log('Server started at http://localhost:' + PORT);
 });
