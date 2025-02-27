@@ -5,8 +5,10 @@ import { ChakraProvider } from "@chakra-ui/react"
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ChakraProvider>
-      <App />
-    </ChakraProvider>
+    <BrowserRouter>
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
+    </BrowserRouter>
   </React.StrictMode>,
 )
