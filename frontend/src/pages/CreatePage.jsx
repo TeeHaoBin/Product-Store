@@ -1,7 +1,6 @@
 import { Box, Button, Container, Heading, Input, useColorModeValue, VStack, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { useProductStore } from "../store/product";
-import { set } from "mongoose";
 
 const CreatePage = () => {
   const [newProduct, setNewProduct] = useState({
