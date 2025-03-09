@@ -5,10 +5,14 @@ import {
 	IconButton,
 	Image,
 	Text,
+    useColorModeValue,
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 const ProductCard = ( {product} ) => {
+  const textColor = useColorModeValue("gray.600", "gray.200");
+  const bg = useColorModeValue("white", "gray.800");
+
   return (
     <Box
         shadow='lg'
@@ -16,6 +20,7 @@ const ProductCard = ( {product} ) => {
         overflow='hidden'
         transition='all 0.3s'
         _hover={{ transform: "translateY(-5px)", shadow: "xl" }}
+        bg={bg}
     >
         <Image src={product.image} alt={product.name} h={48} w='full' objectFit='cover' />
 
